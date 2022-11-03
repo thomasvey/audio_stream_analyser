@@ -1,12 +1,11 @@
 import soundcard as sc
 
-print(sc.speakers)
-
-sc.default_mic
-sc.mics
-
 # # get a list of all speakers:
-# speakers = sc.all_speakers()
+speakers = sc.all_speakers()
+
+for s in speakers:
+    print(s)
+    
 # # get the current default speaker on your system:
 # default_speaker = sc.default_speaker()
 # # get a list of all microphones:
