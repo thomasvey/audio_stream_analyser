@@ -1,16 +1,34 @@
-<h1>Get started</h1>
-We recommand to create a virtual enviroment and install all requirements.
+# Get started
+We recommand to create a virtual enviroment with conda.
 
-    python -m venv venv
-    . venv/bin/activate
-    pip install -r requirements.txt
+- create
+```bash
+    conda env create -f environment.yml
+```
+- enter env
+```bash
+    conda activate audio_analyser
+```
+- list packages
+```bash
+    conda list
+```
+- leave env
+```bash 
+    conda deactivate
+```
+- update
+```bash
+    conda env update
+```
+- remove
+```bash
+    conda env remove -n audio_analyser
+```
 
-to leave the enviroment
 
-    deactivate
-
-<h1>Links</h1>
-<h2>Documents</h2>
+# Links
+## Documents
 
 https://www.analog.com/en/design-center/landing-pages/001/beginners-guide-to-dsp.html
 
