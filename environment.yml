@@ -6,3 +6,4 @@ dependencies:
       - SoundCard==0.4.2
       - matplotlib==3.6.1
       - PyQt5==5.15.7
+      - scipy
