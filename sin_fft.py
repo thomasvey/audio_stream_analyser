@@ -4,7 +4,7 @@ import pylab as plt
 
 
 def sine_wave(  freq        = 100,
-                samplerate  = 48000,
+                samplerate  = 96000,
                 phase       = 0,
                 frames      = 1):
     """
@@ -31,7 +31,7 @@ def sine_wave(  freq        = 100,
     
     return (xt,sig)
 
-def plot(xt, sig, samplerate=48000):
+def plot(xt, sig, samplerate=96000):
     fig1, ax = plt.subplots(nrows=2, ncols=1)
 
     print(f'xlen {len(xt)} slen{len(sig)}')
@@ -40,15 +40,13 @@ def plot(xt, sig, samplerate=48000):
     ax[0].set_xlabel('Time (s)')
     ax[0].set_ylabel('Amplitude')
 
-    sig_fft=np.abs(fft(sig,samplerate))         #TODO: there is always a frequenz present about 100K?? 
+    sig_fft=np.abs(fft(sig,samplerate))
 
-    # m = max(sig_fft)
-    # print(f'max: {m} | len {len(sig_fft)}')
-    # for i, v in enumerate(sig_fft):
-    #     if(v > m-20 or i > n_FFT-10):
-    #         print(f'{i} : {v:.2f}')
+    nyquist_shannon = int(samplerate / 2)
+    sig_fft = sig_fft[:nyquist_shannon]
 
-    ax[1].plot(np.arange(samplerate), sig_fft)      
+
+    ax[1].plot(np.arange(nyquist_shannon), sig_fft)      
     ax[1].set_title('Double Sided FFT - without FFTShift')
     ax[1].set_xlabel(f'Sample points (N-point DFT)')       
     ax[1].set_xscale('log') 
@@ -58,13 +56,17 @@ def plot(xt, sig, samplerate=48000):
     fig1.show()
 
 if __name__ == '__main__':
-    xt,sig0 = sine_wave(freq = 20)
+    xt,sig00 = sine_wave(freq = 10)
+    xt,sig0 = sine_wave(freq = 50)
     xt,sig1 = sine_wave(freq = 100)
-    xt,sig2 = sine_wave(freq = 130)
+    xt,sig2 = sine_wave(freq = 500)
     xt,sig3 = sine_wave(freq = 1000)
-    xt,sig4 = sine_wave(freq = 16000)
+    xt,sig4 = sine_wave(freq = 5000)
+    xt,sig5 = sine_wave(freq = 10000)
+    xt,sig6 = sine_wave(freq = 20000)
+    xt,sig7 = sine_wave(freq = 25000)
 
-    sig = sig0 + sig1 + sig2 + sig3 + sig4
+    sig = sig00+ sig0 + sig1 + sig2 + sig3 + sig4 + sig5 + sig6 + sig7
 
     plot(xt, sig)
 
