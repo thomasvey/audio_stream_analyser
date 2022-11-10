@@ -4,6 +4,7 @@ import time
 from scipy.io import wavfile as wav
 from scipy.fftpack import fft
 import numpy as np
+import sin_fft
 
 import lib_plot as plt
 
@@ -21,23 +22,6 @@ def print_mic():
         print(m)
     print('-'*30)
 
-def generate_sin(sample_rate, freq=100):
-    start_time = 0
-    end_time = 1
-    time = np.arange(start_time, end_time, 1/sample_rate)
-    theta = 0
-    amplitude = 1
-    return amplitude * np.sin(2 * np.pi * freq * time + theta)
-    
-def fft_sin():
-    sample_rate = 4096
-
-    fp = plt.fast_plot(sample_rate)
-    for i in range(10000):
-        data = generate_sin(sample_rate, freq=i)
-        fft_out = fft(data)
-        fp.update_plot(i, np.abs(fft_out))
-
 def loop_back():
     s_tinka = sc.get_speaker('Tinka')
     print(s_tinka)
@@ -46,22 +30,28 @@ def loop_back():
     m_tinka = sc.default_microphone()
     print(m_tinka)
 
-    frames = 4096
+    # 96000spr/s / 30f/s = 3200frames 
+    spr = 96000
+    frames = 3200
 
-    fp = plt.fast_plot(frames)
-    with m_tinka.recorder(samplerate=48000) as mic, \
-        s_tinka.player(samplerate=48000) as sp:
+    fp = plt.fast_plot(frames, spr)
+
+    with m_tinka.recorder(samplerate=spr, channels=[-1]) as mic, \
+        s_tinka.player(samplerate=spr) as sp:
         for i in range(10000):
-            data = mic.record(numframes=int(frames/2))
-            sp.play(data)
+            
+            # data.shape = (frames, channel)
+            data = mic.record(numframes=int(frames))
 
-            fft_out = fft(data)
-            fp.update_plot(i, np.abs(fft_out))
-            print(f'{time.time():3.1f} {len(data)} {len(fft_out)}')
+            #sp.play(data)
+
+            fp.update_plot(i, data)
+
+            #print(f'{time.time():3.1f} {len(data)} {len(fft_out)}')
 
 if __name__ == '__main__':
-    #loop_back()
-    fft_sin()
+    loop_back()
+    #fft_sin()
 
         
 
