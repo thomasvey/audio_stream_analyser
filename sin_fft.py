@@ -3,7 +3,7 @@ from scipy.fftpack import fft
 import pylab as plt
 
 
-def sine_wave(  freq        = 100,
+def sine_wave(  freq        = 10,
                 samplerate  = 96000,
                 phase       = 0,
                 frames      = 1):
@@ -18,18 +18,20 @@ def sine_wave(  freq        = 100,
         (xt,sig) : time base (t) and the signal g(t) as tuple
     """
 
-    xt = np.linspace(start= 0, 
-                     stop = 2*np.pi*frames,
-                     num=samplerate*frames)
+    t = np.linspace(start= 0, 
+                     stop = 1*frames,
+                     num=int(samplerate*frames))
+    
+    print(len(t))
     
     # w = 2pi/T = 2pi*f
-    # sin(w * t)
-    # sin(2pi* f * t)
-    # sin(2pi* f / s*t)
+    # Bogenmaß = (Gradmaß/360)*2*PI
+    ## negatives Vorzeichen entspricht positiver Verschiebung
+    w = 2. * np.pi * freq
+    phaseShift = (phase/360)*2*np.pi
+    sig = np.sin(w*t - phaseShift)
     
-    sig = np.sin(xt * freq + phase)
-    
-    return (xt,sig)
+    return (t,sig)
 
 def plot(xt, sig, samplerate=96000):
     fig1, ax = plt.subplots(nrows=2, ncols=1)
@@ -56,18 +58,15 @@ def plot(xt, sig, samplerate=96000):
     fig1.show()
 
 if __name__ == '__main__':
-    xt,sig00 = sine_wave(freq = 10)
-    xt,sig0 = sine_wave(freq = 50)
-    xt,sig1 = sine_wave(freq = 100)
-    xt,sig2 = sine_wave(freq = 500)
-    xt,sig3 = sine_wave(freq = 1000)
-    xt,sig4 = sine_wave(freq = 5000)
-    xt,sig5 = sine_wave(freq = 10000)
-    xt,sig6 = sine_wave(freq = 20000)
-    xt,sig7 = sine_wave(freq = 25000)
+    xt,sig00 = sine_wave(freq = 2)
+    # xt,sig0 = sine_wave(freq = 50)
+    # xt,sig1 = sine_wave(freq = 100)
+    # xt,sig2 = sine_wave(freq = 500)
+    # xt,sig3 = sine_wave(freq = 1000)
+    # xt,sig4 = sine_wave(freq = 5000)
+    # xt,sig5 = sine_wave(freq = 10000)
+    # xt,sig6 = sine_wave(freq = 20000)
+    # xt,sig7 = sine_wave(freq = 25000)
 
-    sig = sig00+ sig0 + sig1 + sig2 + sig3 + sig4 + sig5 + sig6 + sig7
-
+    sig = sig00
     plot(xt, sig)
-
-    input()
