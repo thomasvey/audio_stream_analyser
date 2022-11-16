@@ -1,7 +1,7 @@
 # Get started
 We recommand to create a virtual enviroment with conda.
 
-- create
+- initialize
 ```bash
     conda env create -f environment.yml
 ```
@@ -24,6 +24,11 @@ We recommand to create a virtual enviroment with conda.
 - remove
 ```bash
     conda env remove -n audio_analyser
+```
+
+- daeactivate conda default base activation with terminal startup
+```bash
+    conda config --set auto_activate_base false
 ```
 
 

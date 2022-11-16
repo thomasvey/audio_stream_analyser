@@ -2,8 +2,6 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 
-
-
 def live_update_demo(blit = False):
     x = np.linspace(0,50., num=100)
     X,Y = np.meshgrid(x,x)

@@ -23,6 +23,7 @@ def sine_wave(  freq        = 100,
                      num=samplerate*frames)
     
     # w = 2pi/T = 2pi*f
+<<<<<<< Updated upstream
     # sin(w * t)
     # sin(2pi* f * t)
     # sin(2pi* f / s*t)
@@ -30,6 +31,14 @@ def sine_wave(  freq        = 100,
     sig = np.sin(xt * freq + phase)
     
     return (xt,sig)
+=======
+    # Bogenmaß = (Gradmaß/360)*2*PI
+    ## negatives Vorzeichen entspricht positiver Verschiebung
+    w = 2. * np.pi * freq
+    phaseShift = (phase/360)*2*np.pi
+    sig = np.sin(w*t - phaseShift)    
+    return (t,sig)
+>>>>>>> Stashed changes
 
 def plot(xt, sig, samplerate=96000):
     fig1, ax = plt.subplots(nrows=2, ncols=1)
